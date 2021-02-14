@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<meta charset="utf-8">
+		<title>提出ページ</title>
+		<meta name="description" content="書いたソースコードの提出を行うページ">
+		<link rel="stylesheet" th:href="@{/css/style.css}">
+		<script>
+			MathJax = {
+				chtml: {
+					scale: 0.7 ,
+					matchFontHeight: false
+				}
+			};
+		</script>
+		<script id="MathJax-script" async
+			src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+		</script>
+	</head>
+	<body>
+		<header id="pageHead">
+			<div class="pageTopRegion">
+				<h1 id="siteTitle" style="float: left;">問題を解く</h1>
+				<div id="usermanip" style="float: right;">
+					<a th:href="@{/login}" sec:authorize="!isAuthenticated()" style="top: 30px;">sign in</a><br>
+					<a th:href="@{/register}" sec:authorize="!isAuthenticated()" style="top: 30px;">register</a>
+					<a th:href="@{/list}" sec:authorize="isAuthenticated()" sec:authentication="name"></a><br>
+					<a th:href="@{/logout}" sec:authorize="isAuthenticated()">Log Out</a>
+				</div>
+			</div>
+			<nav class="globalNavi">
+				<ul>
+					<li><a th:href="@{/}">ホーム</a></li>
+					<li class="current">問題を解く</li>
+					<li><a th:href="@{/links}">リンク集</a></li>
+					<li><a th:href="@{/about}">サイトについて</a></li>
+				</ul>
+			</nav>
+		</header>
+		<p class="topicPath"><a th:href="@{/}">ホーム</a> &gt; <a th:href="@{/judge_system/spring_camp/choose}">問題を選ぶ</a> &gt; 問題を解く</p>
+		<div id="problemDescription">
+			<h1 id="problemTitle">Mall</h1>
+			<a href="https://www.ioi-jp.org/camp/2007/2007-sp-tasks/2007-sp-day1_20.pdf" target="_blank" rel="noopener noreferrer">問題文へのリンク</a>
+		</div>
+		<section id="problemDetail">
+		<p>
+			　	<font color="red">※注意</font> <font face="serif">問題文中に入力ファイルからの入力との表記がありますが、元の問題文からの改変を避けるためであり、実際は標準入力からの入力となります。</font><br><br>
+				時間制限 6 秒 / データ<br>
+				　クロアチアの首都ザグレブでは，IOI2007の開催にあわせて，郊外に大型のショッピングモールを建設することにした．ショッピングモールの建設候補地は，下図のように横\( \small m\)ブロック，縦\( \small n\)ブロックの格子状に区切られている．<br>
+			</p>
+				<figure id="" style="margin: 0 auto; display: inline-block;" width="300" height="200">
+				<img width="201" height="141" src="/images/grid.jpg" alt="grid">
+				<figcaption>建設候補地の例\( \small (m = 10, n = 7)\)</figcaption>
+				</figure>
+			<p>
+				　ザグレブ市では，建設候補地の中から横\( \small a\)ブロック，縦\( \small b\)ブロックの長方形の領域を選び，そこにショッピングモールを建設することにした．しかし，建設候補地内のいくつかのブロックには，すでに人が住んでおり，その土地にはショッピングモールを建設することができない．もし，横\( \small a\)ブロック，縦\( \small b\)ブロックの長方形領域の中に人が住んでいるブロックが無ければ，その長方形領域内のブロックを全て買収することにより，ショッピングモールを建設することができる．ザグレブ市の財政上の理由から，用地買収にかかる費用はできるだけ少なくする必要がある．予算案を策定するため，ショッピングモール建設のための用地買収に必要な費用を早急に計算する必要がある．そこで，ザグレブ市では，そのためのプログラムの作成を，IOI2007 の代表候補者であるあなたに依頼することにした．<br>
+				　入力として，建設候補地の大きさと，ショッピングモールの大きさが与えられ，また，各ブロックごとに，そこに人が住んでいるかどうかの情報と，もし人が住んでいなければそのブロックを買収するのに必要な費用が与えられたとき，ショッピングモール建設のための用地買収に必要な費用の最小値を求めるプログラムを作れ．以下では，建設候補地の左から\( \small i\)列目，上から\( \small j\)行目のブロックを\( \small (i, j)\)で表す．<br><br>
+				　\( {\bf \small  Input.} \) 入力ファイル\( {\tt \small  mall.in} \)の\( \small 1\)行目には，\( \small 2\)つの整数\( \small m, n (1 \leqq m, n \leqq 1000)\)が空白を区切りとして書かれている．これは，建設候補地の大きさが横\( \small m\)ブロック，縦\( \small n\)ブロックであることを表す．<br>
+				　\( \small 2\)行目には，2 つの整数\( \small a, b (1 \leqq a, b \leqq 1000)\)が空白を区切りとして書かれている．これは，ショッピングモールの大きさが横\( \small a\)ブロック，縦\( \small b\)ブロックであることを表す．続く\( \small n\)行\( \small (3\)行目～\( \small n + 2\)行目\( \small )\)には，建設候補地内の各ブロックの情報が書かれている．\( \small j + 2\)行目\( \small (1 \leqq j \leqq n)\)は上から\( \small j\)行目のブロックの情報を表しており，\( \small m\)個の整数\( \small c_{1,j}, \cdots , c_{m,j}(-1 \leqq c_{i,j} \leqq 100)\)が空白を区切りとして書かれている．\( \small c_{i,j}= -1\)のときは，ブロック\( \small (i, j)\)に人が住んでいることを表す．そうでないときは，ブロック\( \small (i, j)\)の買収にかかる費用が\( \small c_{i,j}\)であることを表す．<br>
+				　なお，採点に用いる入力データに対しては，ショッピングモールの建設は常に可能である．<br>
+				　\( {\bf \small  Output.} \) 出力は，標準出力に行うこと．ショッピングモール建設のための用地買収に必要な費用の最小値を出力せよ．<br><br>
+				例<br>
+				\( \begin{array}{ccc}
+				\small
+				{\tt \small  mall.in} & 標準出力 \\
+				\hline
+				7 & 6 & 184 \\
+				3 & 2 \\
+				26 & 29 & 84 & 15 & -1 & 1 & 71 \\
+				45 & 14 & 38 & 91 & 62 & 77 & 35 \\
+				68 & -1 & -1 & 90 & 63 & 56 & 70 \\
+				31 & 2 & 4 & 74 & 72 & 41 & 90 \\
+				100 & 26 & 21 & -1 & 44 & 72 & 60 \\
+				71 & 4 & 40 & 93 & 48 & -1 & 50 \\
+				\hline
+				\end{array} \)
+			</p>
+		</section>
+
+		<div id="submissionPageBody">
+			<section class="submissionArea">
+				<label for="submit">提出欄</label>
+				<form th:action="@{/result/mall}" method="post">
+					<div id="editor" style="height: 550px; width: 600px;"></div>
+					<textarea name="submit" id="submit" style="display: none;"></textarea>
+					<input class="submitBtn" type="submit" value="提出して結果を見る →">
+				</form>
+			</section>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+		<script>
+			var editor = ace.edit("editor");
+			editor.getSession().setMode("ace/mode/c_cpp");
+			editor.getSession().on('change', function(){
+				var textcode = editor.getSession().getValue();
+				document.getElementById('submit').value = textcode;
+			});
+		</script>
+	</body>
+</html>

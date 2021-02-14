@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <th:block th:insert="user_management/fragments/base :: header"></th:block>
+</head>
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <th:block th:insert="user_management/fragments/sidebar :: sidebar"></th:block>
+
+    <!-- Main -->
+    <div id="content-wrapper" class="d-flex align-items-center">
+      <div id="content">
+        <div class="container-fluid">
+
+          <!-- Error Text -->
+          <div class="text-center">
+            <div class="error mx-auto" th:attr="data-text=${status}"
+              th:text="${status}">
+            </div>
+            <p class="lead text-gray-800 mb-5" th:text="${error}"></p>
+            <p class="text-gray-500 mb-0">ページを表示できません</p>
+            <a th:href="@{/user}">&larr; ホームに戻る</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- End of Main -->
+  </div>
+
+  <th:block th:insert="user_management/fragments/base :: scripts"></th:block>
+</body>
+</html>

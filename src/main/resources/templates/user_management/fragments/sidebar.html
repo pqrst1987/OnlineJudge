@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <th:block th:fragment="sidebar">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+      id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center"
+        th:href="@{/user}">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-id-card"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">
+          ユーザ画面
+        </div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Nav Item -->
+      <li class="nav-item active">
+        <a class="nav-link pt-2" th:href="@{/}">
+          <i class="fas fa-user"></i>
+          <span>ホームに戻る</span>
+        </a>
+      </li>
+      <!-- ログイン情報の下に、「ユーザ一覧」を追加します -->
+      <th:block sec:authorize="hasRole('ADMIN')">
+        <li class="nav-item active">
+          <a class="nav-link pt-2">
+            <i class="fas fa-table"></i>
+            <span>提出一覧</span>
+          </a>
+        </li>
+      </th:block>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Logout -->
+      <li class="nav-item active">
+        <a class="nav-link" th:href="@{/logout}">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>ログアウト</span>
+        </a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle">
+        </button>
+      </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+  </th:block>
+</body>
+</html>

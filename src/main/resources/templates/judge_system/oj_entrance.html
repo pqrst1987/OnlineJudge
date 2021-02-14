@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<meta charset="utf-8">
+		<title>大会選択</title>
+		<meta name="description" content="どこで出された問題かを選ぶページ">
+		<link rel="stylesheet" th:href="@{/css/style.css}">
+	</head>
+	<body>
+		<header id="pageHead">
+		<div class="pageTopRegion">
+			<h1 id="siteTitle" style="float: left;">各種オンラインジャッジ</h1>
+			<div id="usermanip" style="float: right;">
+				<a th:href="@{/login}" sec:authorize="!isAuthenticated()" style="top: 30px;">sign in</a><br>
+				<a th:href="@{/register}" sec:authorize="!isAuthenticated()" style="top: 30px;">register</a>
+				<a th:href="@{/list}" sec:authorize="isAuthenticated()" sec:authentication="name"></a><br>
+				<a th:href="@{/logout}" sec:authorize="isAuthenticated()">Log Out</a>
+			</div>
+		</div>
+			<nav class="globalNavi">
+				<ul>
+					<li><a th:href="@{/}">ホーム</a></li>
+					<li class="current">問題を解く</li>
+					<li><a th:href="@{/links}">リンク集</a></li>
+					<li><a th:href="@{/about}">サイトについて</a></li>
+				</ul>
+			</nav>
+		</header>
+		<div id="pageMain">
+			<p class="topicPath"><a th:href="@{/}">ホーム</a> &gt; 大会を選ぶ</p>
+			<div id="mainPageBody">
+				<section class="linkVisuals">
+					<h1>大会選択</h1>
+					<div class="linkToSolve">
+						<a th:href="@{/judge_system/spring_camp/choose}">
+							<div class="linkToSolveText">
+								<h1>情報オリンピック春合宿</h1>
+								<p>情報オリンピック日本代表の国内選考会で出題された問題に挑戦します。</p>
+							</div>
+							<img class="linkPicture" th:src="@{/images/pexels-hitesh-choudhary-879109.jpg}" width="300" height="163" alt="">
+						</a>
+					</div>
+				</section>
+			</div>
+		</div>
+	</body>
+</html>

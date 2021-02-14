@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <th:block th:insert="user_management/fragments/base :: header"></th:block>
+</head>
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <th:block th:insert="user_management/fragments/sidebar :: sidebar"></th:block>
+
+    <!-- Main -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <div class="container-fluid">
+
+          <!-- List -->
+          <div class="card shadow my-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">
+                ログイン情報
+              </h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+
+                <table id="user-table" class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>ログインユーザ名</th>
+                      <th>ユーザ権限</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td th:text="${username}"></td>
+                      <td th:text="${role}"></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+          </div>
+          <!-- End of List -->
+
+        </div>
+      </div>
+    </div>
+    <!-- End of Main -->
+  </div>
+
+  <th:block th:insert="user_management/fragments/base :: scripts"></th:block>
+</body>
+</html>

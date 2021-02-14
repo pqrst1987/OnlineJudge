@@ -1,0 +1,8 @@
+@charset "UTF-8";
+
+.bg-login-image {
+  background: url(/webjars/startbootstrap-sb-admin-2/img/undraw_posting_photo.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}

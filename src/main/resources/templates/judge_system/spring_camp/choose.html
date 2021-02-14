@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<meta charset="UTF-8">
+		<title>問題選択画面</title>
+		<link rel="stylesheet" th:href="@{/css/style.css}">
+	</head>
+	<body>
+
+		<header id="pageHead">
+			<div class="pageTopRegion">
+				<h1 id="siteTitle" style="float: left;">問題を解く</h1>
+				<div id="usermanip" style="float: right;">
+					<a th:href="@{/login}" sec:authorize="!isAuthenticated()" style="top: 30px;">sign in</a><br>
+					<a th:href="@{/register}" sec:authorize="!isAuthenticated()" style="top: 30px;">register</a>
+					<a th:href="@{/list}" sec:authorize="isAuthenticated()" sec:authentication="name"></a><br>
+					<a th:href="@{/logout}" sec:authorize="isAuthenticated()">Log Out</a>
+				</div>
+			</div>
+			<nav class="globalNavi">
+				<ul>
+					<li><a th:href="@{/}">ホーム</a></li>
+					<li class="current">問題を解く</li>
+					<li><a th:href="@{/links}">リンク集</a></li>
+					<li><a th:href="@{/about}">サイトについて</a></li>
+				</ul>
+			</nav>
+		</header>
+		<p class="topicPath"><a th:href="@{/}">ホーム</a> &gt; <a href="@{/oj_entrance}">大会を選ぶ</a> &gt; 問題を選ぶ</p>
+		<form id="selectionForm" th:action="@{/spring_camp/problems}" method="post">
+			<h1 style="font-size: 16px;">解きたい問題が出題された年度、大会の何日目に出題された問題か、その日の何問目として出題されたかを選択してください。</h1>
+			<p><a href="https://joi.goodbaton.com/">参考リンク</a>　有志による投票によって決定された難易度表です。</p>
+			<div class="selection">
+				年度
+				<select class="pullDown" name="year">
+					<option th:each="i : ${#numbers.sequence(2007, 2020)}" th:value="${i}" th:text="${i}+ '年'"></option>
+				</select>
+				出題された日
+				<select class="pullDown" name="day">
+					<option th:each="i : ${#numbers.sequence(1, 4)}" th:value="${i}" th:text="'day' + ${i}">
+				</select>
+				出題された順番
+				<select class="pullDown" name="number">
+					<option th:each="i : ${#numbers.sequence(1, 3)}" th:value="${i}" th:text="${i} + '問目'">
+				</select>
+			</div>
+			<input class="chooseBtn" type="submit" value="提出画面に進む →">
+		</form>
+	</body>
+</html>

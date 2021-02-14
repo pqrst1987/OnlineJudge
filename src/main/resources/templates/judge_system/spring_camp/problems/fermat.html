@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<meta charset="utf-8">
+		<title>提出ページ</title>
+		<meta name="description" content="書いたソースコードの提出を行うページ">
+		<link rel="stylesheet" th:href="@{/css/style.css}">
+		<script>
+			MathJax = {
+				chtml: {
+					scale: 0.7 ,
+					matchFontHeight: false
+				}
+			};
+		</script>
+		<script id="MathJax-script" async
+			src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+		</script>
+	</head>
+	<body>
+		<header id="pageHead">
+			<div class="pageTopRegion">
+				<h1 id="siteTitle" style="float: left;">問題を解く</h1>
+				<div id="usermanip" style="float: right;">
+					<a th:href="@{/login}" sec:authorize="!isAuthenticated()" style="top: 30px;">sign in</a><br>
+					<a th:href="@{/register}" sec:authorize="!isAuthenticated()" style="top: 30px;">register</a>
+					<a th:href="@{/list}" sec:authorize="isAuthenticated()" sec:authentication="name"></a><br>
+					<a th:href="@{/logout}" sec:authorize="isAuthenticated()">Log Out</a>
+				</div>
+			</div>
+			<nav class="globalNavi">
+				<ul>
+					<li><a th:href="@{/}">ホーム</a></li>
+					<li class="current">問題を解く</li>
+					<li><a th:href="@{/links}">リンク集</a></li>
+					<li><a th:href="@{/about}">サイトについて</a></li>
+				</ul>
+			</nav>
+		</header>
+		<p class="topicPath"><a th:href="@{/}">ホーム</a> &gt; <a th:href="@{/judge_system/spring_camp/choose}">問題を選ぶ</a> &gt; 問題を解く</p>
+		<div id="problemDescription">
+			<h1 id="problemTitle">Fermat</h1>
+			<a href="https://www.ioi-jp.org/camp/2007/2007-sp-tasks/2007-sp-day2_21.pdf" target="_blank" rel="noopener noreferrer">問題文へのリンク</a>
+		</div>
+		<section id="problemDetail">
+			<p>
+			　	<font color="red">※注意</font> <font face="serif">問題文中に入力ファイルからの入力との表記がありますが、元の問題文からの改変を避けるためであり、実際は標準入力からの入力となります。</font><br><br>
+				時間制限 0.5 秒 / データ<br>
+				　素数\( \small p\)と自然数\( \small n \geqq 1\)が与えられたとき，
+					\begin{equation}
+					x^n + y^n ≡ z^n \pmod{a} \nonumber
+					\end{equation}
+				をみたす整数\( \small x, y, z (0 \leqq x, y, z \leqq p - 1)\)の組\( \small (x, y, z)\)の個数\( \small m\)を求めるプログラムを作れ．ここで，\( \small a ≡ b \pmod{a}\)とは，\( \small a - b\)が\( \small p\)で割り切れることを意味する．<br>
+				　\( {\bf \small Input.} \)入力ファイル\( {\tt \small fermat.in} \)の１行目には素数\( \small p (p < 10000)\)が書かれている．2行目には自然数\( \small n (1 \leqq n \leqq 10000)\)が書かれている．<br>
+				　\( {\bf \small Output.} \)標準出力に1つの整数\( \small m\)のみからなる1行を出力せよ．<br><br>
+				例1<br>
+				\(
+				\small \begin{array}{ccc}
+				{\tt \small  fermat.in} & 標準出力 \\
+				\hline
+				3 & 9 \\
+				5 \\
+				\hline
+				\end{array} \normalsize \)<br>
+				\( \small x^5 + y^5 ≡ z^5 \pmod{3} \)をみたす整数\( \small x, y, z (0 \leqq x, y, z \leqq 2)\)の組\( \small (x, y, z)\)は
+				\begin{equation}
+				\small
+					(0,0,0), (0,1,1), (0,2,2), (1,0,1), (1,1,2), (1,2,0), (2,0,2), (2,1,0), (2,2,1) \nonumber
+				\end{equation}
+				の 9 個である．<br><br>
+				例2<br>
+				\(
+				\small \begin{array}{ccc}
+				{\tt \small  fermat.in} & 標準出力 \\
+				\hline
+				19 & 481 \\
+				27 \\
+				\hline
+				\end{array} \normalsize \)<br>
+				\( \small x^{21} + y^{21} ≡ z^{21} \pmod{19}\)をみたす整数\( \small x, y, z (0 \leqq x, y, z \leqq 18)\)の組\( \small (x, y, z)\)は\( \small 487\)個ある．<br><br>
+				注意 採点に用いる入力データに対しては，\( \small m\)の値は\( \small 2^{31}\)よりも小さい．
+			</p>
+		</section>
+
+		<div id="submissionPageBody">
+			<section class="submissionArea">
+				<label for="submit">提出欄</label>
+				<form th:action="@{/result/fermat}" method="post">
+					<div id="editor" style="height: 550px; width: 600px;"></div>
+					<textarea name="submit" id="submit" style="display: none;"></textarea>
+					<input class="submitBtn" type="submit" value="提出して結果を見る →">
+				</form>
+			</section>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+		<script>
+			var editor = ace.edit("editor");
+			editor.getSession().setMode("ace/mode/c_cpp");
+			editor.getSession().on('change', function(){
+				var textcode = editor.getSession().getValue();
+				document.getElementById('submit').value = textcode;
+			});
+		</script>
+	</body>
+</html>

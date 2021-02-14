@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <th:block th:insert="user_management/fragments/base :: header"></th:block>
+</head>
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <th:block th:insert="user_management/fragments/sidebar :: sidebar"></th:block>
+
+    <!-- Main -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <div class="container-fluid">
+
+          <!-- List -->
+          <div class="card shadow my-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">
+                提出一覧
+              </h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table id="user-table" class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>問題名</th>
+                      <th>結果</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:each="result : ${resultList}">
+                      <td><a th:href="@{/result(submissionId=${result.getSubmissionId()})}" th:text="${result.getSubmissionId()}"></a></td>
+                      <td><a th:href="@{/spring_camp/problems(problemName=${result.getProblemName()})}" th:text="${result.getProblemName()}"></a></td>
+                      <td th:if="${result.getTotalResult() == 1}" th:text="|Perfect|"></td>
+                      <td th:if="${result.getTotalResult() == 2}" th:text="|Wrong Answer|"></td>
+                      <td th:if="${result.getTotalResult() == 3}" th:text="|Runtime Error|"></td>
+                      <td th:if="${result.getTotalResult() == 4}" th:text="|TimeLimit Exceed|"></td>
+                      <td th:if="${result.getTotalResult() == 5}" th:text="|Compile Error|"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- End of List -->
+
+        </div>
+      </div>
+    </div>
+    <!-- End of Main -->
+  </div>
+
+  <th:block th:insert="user_management/fragments/base :: scripts"></th:block>
+  <script th:src="@{/js/usertables.js}"></script>
+</body>
+</html>

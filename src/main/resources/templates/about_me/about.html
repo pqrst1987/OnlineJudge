@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<meta charset="utf-8">
+		<title>Q-Online Judge ホーム</title>
+		<meta name="description" content="国際情報オリンピック代表選考会（通称春合宿）にて出題された問題の正誤判定を全自動で行うサイトです">
+		<link rel="stylesheet" th:href="@{/css/style.css}">
+	</head>
+	<body>
+		<header id="pageHead">
+			<div class="pageTopRegion">
+				<h1 id="siteTitle" style="float: left;">このサイトについて</h1>
+				<div id="usermanip" style="float: right;">
+					<a th:href="@{/login}" sec:authorize="!isAuthenticated()" style="top: 30px;">sign in</a><br>
+					<a th:href="@{/register}" sec:authorize="!isAuthenticated()" style="top: 30px;">register</a>
+					<a th:href="@{/list}" sec:authorize="isAuthenticated()" sec:authentication="name"></a><br>
+					<a th:href="@{/logout}" sec:authorize="isAuthenticated()">log out</a>
+				</div>
+			</div>
+			<nav class="globalNavi">
+				<ul>
+					<li><a th:href="@{/}">ホーム</a></li>
+					<li><a th:href="@{/oj_entrance}">問題を解く</a></li>
+					<li><a th:href="@{/links}">リンク集</a></li>
+					<li class="current">サイトについて</li>
+					<li>
+				</ul>
+			</nav>
+		</header>
+		<p class="topicPath"><a th:href="@{/}">ホーム</a> &gt; このサイトについて</p>
+		<article id="about_this_site">
+			<h1>このサイトについて</h1>
+			<p>
+				　このサイトは、情報オリンピックなどの大会への参加を検討している学生などが、過去の本番と同じ問題を気軽に練習することを目的として作成しました。<br>
+				　今後とも拡充を続けていく予定ですので、よろしくお願いします。
+			</p>
+		</article>
+		<article id="how_to_use">
+			<h1>このサイトの使いかた</h1>
+			<h2>ユーザー登録</h2>
+			<p>ユーザー登録がまだの場合、トップページ右上の、registerの部分をクリックします。</p>
+			<img th:src="@{/images/top_page.png}" alt="" width="500" height="245">
+			<p>ユーザー情報を入力する画面に移ります。</p>
+			<img th:src="@{/images/register_page.png}" alt="" width="500" height="245">
+			<p>名前（ハンドルネーム推奨、最低２文字）とパスワード（最低４文字、流出歴のあるパスワードを利用するとエラーが出る可能性があります）を設定すると、このサイトの様々な機能が使えるようになります。</p>
+			<h2>ログイン</h2>
+			<p>画面右上のsign inの文字をクリックします。</p>
+			<img th:src="@{/images/login_page.png}" alt="" width="500" height="236">
+			<p>ユーザー登録時に設定した名前とパスワードを入力すると、ログインできます。</p>
+			<img th:src="@{/images/done_login.png}" alt="" width="500" height="120">
+			<p>これまでに提出したコードを見ることも可能です。</p>
+			<img th:src="@{/images/personal_page.png}" alt="" width="500" height="81">
+			<h2>問題を解く</h2>
+			<p>トップページの「問題を解く」と書かれている場所をクリックします。</p>
+			<img th:src="@{/images/top_page.png}" alt="" width="500" height="277">
+			<p>次のページでは、練習したい大会を選びます。</p>
+			<img th:src="@{/images/choose_contest_page.png}" alt="" width="500" height="253">
+			<p>情報オリンピック春合宿の場合、出題された年度、日、問題番号を選択します。</p>
+			<img th:src="@{/images/choose_problem_page.png}" alt="" width="500" height="271">
+			<p>問題文を読んでから、答えとなるプログラムをテキストエリアに貼り付け、提出ボタンを押します。（現在はC++のみに対応していますが、将来的にはJavaにも対応したいと考えています。）</p>
+			<img th:src="@{/images/result_page.png}" alt="" width="500" height="269">
+			<p>ジャッジが行われるので、自分の書いたプログラムが合っているかを確認してください。</p>
+		</article>
+	</body>
+</html>

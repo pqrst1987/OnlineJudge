@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<meta charset="utf-8">
+		<title>提出ページ</title>
+		<meta name="description" content="書いたソースコードの提出を行うページ">
+		<link rel="stylesheet" th:href="@{/css/style.css}">
+		<script>
+			MathJax = {
+				chtml: {
+					scale: 0.7 ,
+					matchFontHeight: false
+				}
+			};
+		</script>
+		<script id="MathJax-script" async
+			src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+		</script>
+	</head>
+	<body>
+		<header id="pageHead">
+			<div class="pageTopRegion">
+				<h1 id="siteTitle" style="float: left;">問題を解く</h1>
+				<div id="usermanip" style="float: right;">
+					<a th:href="@{/login}" sec:authorize="!isAuthenticated()" style="top: 30px;">sign in</a><br>
+					<a th:href="@{/register}" sec:authorize="!isAuthenticated()" style="top: 30px;">register</a>
+					<a th:href="@{/list}" sec:authorize="isAuthenticated()" sec:authentication="name"></a><br>
+					<a th:href="@{/logout}" sec:authorize="isAuthenticated()">Log Out</a>
+				</div>
+			</div>
+			<nav class="globalNavi">
+				<ul>
+					<li><a th:href="@{/}">ホーム</a></li>
+					<li class="current">問題を解く</li>
+					<li><a th:href="@{/links}">リンク集</a></li>
+					<li><a th:href="@{/about}">サイトについて</a></li>
+				</ul>
+			</nav>
+		</header>
+		<p class="topicPath"><a th:href="@{/}">ホーム</a> &gt; <a th:href="@{/judge_system/spring_camp/choose}">問題を選ぶ</a> &gt; 問題を解く</p>
+		<div id="problemDescription">
+			<h1 id="problemTitle">Factorial</h1>
+			<a href="https://www.ioi-jp.org/camp/2007/2007-sp-tasks/2007-sp-day1_20.pdf" target="_blank" rel="noopener noreferrer">問題文へのリンク</a>
+		</div>
+		<section id="problemDetail">
+			<p>
+			　	<font color="red">※注意</font> <font face="serif">問題文中に入力ファイルからの入力との表記がありますが、元の問題文からの改変を避けるためであり、実際は標準入力からの入力となります。</font><br><br>
+				制限時間 0.5秒<br>
+				　整数\( \small n (2 \leqq n \leqq 100000000)\)が与えられる．\( \small m\)の階乗が\( \small n\)で割り切れるような最小の正の整数\( \small m\)を求めるプログラムを書け. ただし，正の整数\( \small m\)に対し，\( \small m\)の階乗とは\( \small 1\)から\( \small m\)までの整数の積のことである．<br><br>
+				　\( {\bf \small Input.} \) 入力はファイル \( {\tt \small factorial.in} \)に与えられる. このファイルは\( \small 1\)行からなり, 整数\( \small n\)が書かれている.<br>
+				　\( {\bf \small Output.} \) プログラムは結果を標準出力に出力すること. 整数\( \small m\)のみを書いた\( \small 1\)行を出力せよ.<br><br>
+				例1<br>
+				\( \begin{array}{ccc}
+				{\tt \small factorial.in} & 標準出力 \\
+				\hline
+				10 & 5 \\
+				\hline
+				\end{array} \)<br>
+				例2<br>
+				\( \begin{array}{ccc}
+				{\tt \small factorial.in} & 標準出力 \\
+				\hline
+				12 & 4 \\
+				\hline
+				\end{array} \)<br>
+			</p>
+		</section>
+
+		<div id="submissionPageBody">
+			<section class="submissionArea">
+				<label for="submit">提出欄</label>
+				<form th:action="@{/result/factorial}" method="post">
+					<div id="editor" style="height: 550px; width: 600px;"></div>
+					<textarea name="submit" id="submit" style="display: none;"></textarea>
+					<input class="submitBtn" type="submit" value="提出して結果を見る →">
+				</form>
+			</section>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+		<script>
+			var editor = ace.edit("editor");
+			editor.getSession().setMode("ace/mode/c_cpp");
+			editor.getSession().on('change', function(){
+				var textcode = editor.getSession().getValue();
+				document.getElementById('submit').value = textcode;
+			});
+		</script>
+	</body>
+</html>

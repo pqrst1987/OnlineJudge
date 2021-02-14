@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<meta charset="utf-8">
+		<title>提出ページ</title>
+		<meta name="description" content="書いたソースコードの提出を行うページ">
+		<link rel="stylesheet" th:href="@{/css/style.css}">
+		<script>
+			MathJax = {
+				chtml: {
+					scale: 0.7 ,
+					matchFontHeight: false
+				}
+			};
+		</script>
+		<script id="MathJax-script" async
+			src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+		</script>
+	</head>
+	<body>
+		<header id="pageHead">
+			<div class="pageTopRegion">
+				<h1 id="siteTitle" style="float: left;">問題を解く</h1>
+				<div id="usermanip" style="float: right;">
+					<a th:href="@{/login}" sec:authorize="!isAuthenticated()" style="top: 30px;">sign in</a><br>
+					<a th:href="@{/register}" sec:authorize="!isAuthenticated()" style="top: 30px;">register</a>
+					<a th:href="@{/list}" sec:authorize="isAuthenticated()" sec:authentication="name"></a><br>
+					<a th:href="@{/logout}" sec:authorize="isAuthenticated()">Log Out</a>
+				</div>
+			</div>
+			<nav class="globalNavi">
+				<ul>
+					<li><a th:href="@{/}">ホーム</a></li>
+					<li class="current">問題を解く</li>
+					<li><a th:href="@{/links}">リンク集</a></li>
+					<li><a th:href="@{/about}">サイトについて</a></li>
+				</ul>
+			</nav>
+		</header>
+		<p class="topicPath"><a th:href="@{/}">ホーム</a> &gt; <a th:href="@{/judge_system/spring_camp/choose}">問題を選ぶ</a> &gt; 問題を解く</p>
+		<div id="problemDescription">
+			<h1 id="problemTitle">Building</h1>
+			<a href="https://www.ioi-jp.org/camp/2007/2007-sp-tasks/2007-sp-day2_21.pdf" target="_blank" rel="noopener noreferrer">問題文へのリンク</a>
+		</div>
+		<section id="problemDetail">
+			<p>
+			　	<font color="red">※注意</font> <font face="serif">問題文中に入力ファイルからの入力との表記がありますが、元の問題文からの改変を避けるためであり、実際は標準入力からの入力となります。</font><br><br>
+				時間制限 1 秒 / データ<br>
+				　国際情報オリンピックが日本で開かれることとなり，世界の選手達を歓迎するため，空港から宿泊施設までの道沿いにある高層ビルを飾りつけることにした．ある著名なデザイナーにデザインを依頼したところ，飾りつけに利用するビルは，空港から宿泊施設に向けて高くなっていく必要があると言った．つまり，飾りつけに利用するビルの高さを，空港に近いものから順に\( \small h1, h2, h3, \cdots\)とおくと，\( \small h1 < h2 < h3 < \cdots \)となっていなければならない．できるだけ飾りつけを華やかにするため，飾りつけに利用するビルの数をできるだけ多くしたい．入力として全てのビルの高さが与えられたとき，利用することのできるビルの数の最大値を計算するプログラムを作れ．<br>
+				　\( {\bf \small  Input.} \)入力ファイル\( {\tt \small  building.in} \)の\( \small 1\)行目には，\( \small 1\)つの整数\( \small n (1 \leqq n \leqq 1000)\)が書かれている．これは，空港から宿泊施設までの道のりにあるビルの数が\( \small n\)であることを表す．次の\( \small n\)行には，それぞれのビルの高さが書かれてる．\( \small i + 1\)行目\( \small (1 \leqq i \leqq n)\)には\( \small 1\)つの整数\( \small a_i(1 \leqq a_i \leqq 10000)\) が書かれている．これは，空港から\( \small i\)個目のビルの高さが\( \small a_i\)であることを表す．<br>
+				　\( {\bf \small  Output.} \)出力は，標準出力に行うこと．飾りつけに利用することのできるビルの数の最大値を表す整数を出力せよ．<br>
+				例<br>
+				\(
+				\small \begin{array}{ccc}
+				{\tt \small  building.in} & 標準出力 \\
+				\hline
+				9 & 5 \\
+				3 \\
+				7 \\
+				5 \\
+				9 \\
+				8 \\
+				10 \\
+				10 \\
+				11 \\
+				9 \\
+				\hline
+				\end{array} \normalsize \)
+			</p>
+		</section>
+
+		<div id="submissionPageBody">
+			<section class="submissionArea">
+				<label for="submit">提出欄</label>
+				<form th:action="@{/result/building}" method="post">
+					<div id="editor" style="height: 550px; width: 600px;"></div>
+					<textarea name="submit" id="submit" style="display: none;"></textarea>
+					<input class="submitBtn" type="submit" value="提出して結果を見る →">
+				</form>
+			</section>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+		<script>
+			var editor = ace.edit("editor");
+			editor.getSession().setMode("ace/mode/c_cpp");
+			editor.getSession().on('change', function(){
+				var textcode = editor.getSession().getValue();
+				document.getElementById('submit').value = textcode;
+			});
+		</script>
+	</body>
+</html>

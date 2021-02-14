@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<meta charset="utf-8">
+		<title>結果画面</title>
+		<meta name="description" content="国際情報オリンピック代表選考会（通称春合宿）にて出題された問題の正誤判定を全自動で行うサイトです">
+		<link rel="stylesheet" th:href="@{/css/style.css}">
+	</head>
+	<body>
+		<header id="pageHead">
+			<div class="pageTopRegion">
+				<h1 id="siteTitle" style="float: left;">問題を解く</h1>
+				<div id="usermanip" style="float: right;">
+					<a th:href="@{/login}" sec:authorize="!isAuthenticated()" style="top: 30px;">sign in</a><br>
+					<a th:href="@{/register}" sec:authorize="!isAuthenticated()" style="top: 30px;">register</a>
+					<a th:href="@{/list}" sec:authorize="isAuthenticated()" sec:authentication="name"></a><br>
+					<a th:href="@{/logout}" sec:authorize="isAuthenticated()">log out</a>
+				</div>
+			</div>
+			<nav class="globalNavi">
+				<ul>
+					<li><a th:href="@{/}">ホーム</a></li>
+					<li class="current">問題を解く</li>
+					<li><a th:href="@{/links}">リンク集</a></li>
+					<li><a th:href="@{/about}">サイトについて</a></li>
+				</ul>
+			</nav>
+		</header>
+		<p class="topicPath"><a th:href="@{/}">ホーム</a> &gt; <a th:href="@{/judge_system/spring_camp/choose}">問題を選ぶ</a> &gt; 問題を解く</p>
+		<div class="showingField">
+			<section id="detailResult">
+				<table id="resultTable" border="1">
+				<label for="resultTable">詳細結果</label>
+					<thead>
+						<tr>
+							<th width="120">サンプル名</th>
+							<th width="240">結果</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="result : ${resultList}">
+								<td th:if="${result.getSampleResult() != 5}" width="120" align="center" th:text="${result.getSampleName()}"></td>
+								<td th:if="${result.getSampleResult() == 5}" width="120" align="center" th:text="|All Samples|"></td>
+								<td th:if="${result.getSampleResult() == 1}" width="240" align="center">Right Answer!</td>
+								<td th:if="${result.getSampleResult() == 2}" width="240" align="center">Wrong Answer...</td>
+								<td th:if="${result.getSampleResult() == 3}" width="240" align="center">Runtime Error</td>
+								<td th:if="${result.getSampleResult() == 4}" width="240" align="center">Time Limit Exceed</td>
+								<td th:if="${result.getSampleResult() == 5}" width="240" align="center">Compile Error</td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+		</div>
+		<div id="resultPageBody">
+			<section class="submissionArea">
+				<label for="submit">提出コード</label>
+				<form th:action="@{/result/scores}" method="post">
+					<div id="editor" style="height: 550px; width: 600px;"></div>
+					<textarea name="submit" id="submit" style="display: none;" th:text="${SourceCode}"></textarea>
+				</form>
+			</section>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+		<script>
+			var editor = ace.edit("editor");
+			editor.getSession().setMode("ace/mode/c_cpp");
+			var textcode = document.getElementById('submit').value;
+			editor.getSession().setValue(textcode);
+		</script>
+	</body>
+</html>
